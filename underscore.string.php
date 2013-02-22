@@ -1,4 +1,7 @@
 <?php
+/**
+ * Multi-Byte compatible port of underscore.string JS library.
+ */
 
 // Returns an instance of __str for OO-style calls
 function __str($item = null) {
@@ -23,17 +26,115 @@ class __str {
         return self::_wrap(strip_tags($str, $allowable));
     }
     
+    public function capitalize($str = null) {
+        list($str) = self::_wrapArgs(func_get_args(), 1);
+        if ($str == null) return self::_wrap('');
+        return self::_wrap(ucfirst($str));
+    }
+    
     public function chop($str = null, $step = null) {
         list($str, $step) = self::_wrapArgs(func_get_args(), 2);
         if ($str == null) return self::_wrap(array());
-        return self::_wrap(str_split($str, $step));
+        if ($step == null || $step < 1) $step = 1;
+        $chars = preg_split('/(?<!^)(?!$)/u', $str); // multibyte split
+        
+        if ($step == 1) {
+            return self::_wrap($chars);
+        } else {
+            $i = 0; $j = 0;
+            $result = array();
+            while (count($chars) > 0) {
+                if ($j++ % $step == 0) $i++;
+                $result[$i] .= array_shift($chars);
+            }
+        }
+        return self::_wrap($result);
     }
+    
+    public function clean($str = null) {
+        list($str) = self::_wrapArgs(func_get_args(), 1);
+        if ($str == null) return self::_wrap('');
+        return self::_wrap(preg_replace('/\s+/', ' ', self::trim($str)));
+    }
+    
+    public function count($str = null, $substr = null) {
+        list($str, $substr) = self::_wrapArgs(func_get_args(), 2);
+        if ($str == null || $substr == null) return self::_wrap(0);
+        return self::_wrap(mb_substr_count($str, $substr));
+    }
+    
+    // chars
+    
+    // swapCase
+    
+    // escapeHTML
+    
+    // unescapeHTML
+    
+    // escapeRegExp
+    
+    // splice
+    
+    // insert
+    
+    // include
+    
+    // join
+    
+    // lines
+    
+    // reverse
+    
+    // startsWith
+    
+    // endsWith
+    
+    // succ
+    
+    // titleize
+    
+    // camelize
+    
+    // underscored
+    
+    // dasherize
+    
+    // classify
+    
+    // humanize
     
     public function trim($str = null) {
         list($str) = self::_wrapArgs(func_get_args(), 1);
         if ($str == null) return self::_wrap('');
         return self::_wrap(trim($str));
     }
+
+    // ltrim
+    
+    // rtrim
+    
+    // truncate
+    
+    // prune
+    
+    // words
+    
+    // pad
+    
+    // lpad
+    
+    // rpad
+    
+    // lrpad
+    
+    // toNumber
+    
+    // numberFormat
+    
+    // ...
+    
+    // Aliases
+    
     
     // Utility Functions taken from underscore.php by Brian Haveri (@brianhaveri)
     
