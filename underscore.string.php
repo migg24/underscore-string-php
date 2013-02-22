@@ -1,6 +1,16 @@
 <?php
 /**
- * Multi-Byte compatible port of underscore.string JS library.
+ * Underscore.string.php 
+ * 
+ * Multi-Byte compatible PHP port of underscore.string JS library.
+ * 
+ * Underscore.string.php is licensed under the MIT license
+ * Underscore.string.php was inspired by and borrowed from Underscore.string.js/Underscore.php
+ * For docs and downloads, see: http://migg24.github.com/underscore-string-php
+
+ * @version 0.1
+ * @author Michael Dreher
+ * @copyright Michael Dreher
  */
 
 // Returns an instance of __str for OO-style calls
